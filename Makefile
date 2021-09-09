@@ -8,7 +8,7 @@ BUILD_META ?= -build-multiarch-$(shell date +%Y%m%d)
 ORG ?= rancher
 # the metrics server has been moved to https://github.com/kubernetes-sigs/metrics-server
 # but still refers internally to github.com/kubernetes-incubator/metrics-server packages
-PKG ?= github.com/kubernetes-incubator/metrics-server
+PKG ?= sigs.k8s.io/metrics-server
 SRC ?= github.com/kubernetes-sigs/metrics-server
 TAG ?= v0.5.0$(BUILD_META)
 UBI_IMAGE ?= centos:7
