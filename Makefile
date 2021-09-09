@@ -10,7 +10,7 @@ ORG ?= rancher
 # but still refers internally to github.com/kubernetes-incubator/metrics-server packages
 PKG ?= github.com/kubernetes-incubator/metrics-server
 SRC ?= github.com/kubernetes-sigs/metrics-server
-TAG ?= v0.3.7$(BUILD_META)
+TAG ?= v0.5.0$(BUILD_META)
 UBI_IMAGE ?= centos:7
 GOLANG_VERSION ?= v1.16.6b7-multiarch
 
