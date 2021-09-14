@@ -40,7 +40,5 @@ RUN install -s bin/* /usr/local/bin
 RUN metrics-server --help
 
 FROM ubi
-RUN yum update -y && \
-    rm -rf /var/cache/yum
 COPY --from=builder /usr/local/bin/metrics-server /
 ENTRYPOINT ["/metrics-server"]
