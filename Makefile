@@ -12,7 +12,11 @@ PKG ?= sigs.k8s.io/metrics-server
 SRC ?= github.com/kubernetes-sigs/metrics-server
 TAG ?= v0.5.0$(BUILD_META)
 UBI_IMAGE ?= centos:7
-GOLANG_VERSION ?= v1.16.6b7-multiarch
+GOLANG_VERSION ?= v1.16.7b7-multiarch
+
+ifneq ($(DRONE_TAG),)
+TAG := $(DRONE_TAG)
+endif
 
 ifeq (,$(filter %$(BUILD_META),$(TAG)))
 $(error TAG needs to end with build metadata: $(BUILD_META))
