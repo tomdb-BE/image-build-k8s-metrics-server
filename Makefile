@@ -4,7 +4,7 @@ ifeq ($(ARCH),)
 ARCH=$(shell go env GOARCH)
 endif
 
-BUILD_META ?= -build-multiarch-$(shell date +%Y%m%d)
+BUILD_META ?= -multiarch-build-$(shell date +%Y%m%d)
 ORG ?= rancher
 # the metrics server has been moved to https://github.com/kubernetes-sigs/metrics-server
 # but still refers internally to github.com/kubernetes-incubator/metrics-server packages
