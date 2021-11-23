@@ -1,5 +1,5 @@
-ARG UBI_IMAGE
-ARG GO_IMAGE
+ARG UBI_IMAGE=registry.access.redhat.com/ubi8/ubi-minimal:latest
+ARG GO_IMAGE=rancher/hardened-build-base:v1.16.10b7
 FROM ${UBI_IMAGE} as ubi
 FROM ${GO_IMAGE} as builder
 # setup required packages
@@ -14,7 +14,8 @@ RUN set -x \
 # setup the build
 ARG PKG="github.com/kubernetes-incubator/metrics-server"
 ARG SRC="github.com/kubernetes-sigs/metrics-server"
-ARG TAG="v0.5.0"
+ARG TAG="v0.5.2"
+ARG ARCH="amd64"
 RUN git clone --depth=1 https://${SRC}.git $GOPATH/src/${PKG}
 WORKDIR $GOPATH/src/${PKG}
 RUN git fetch --all --tags --prune
@@ -44,10 +45,14 @@ RUN GO111MODULE=$(if echo ${TAG} | grep -qE '^v0\.3\.'; then echo off; fi) \
     " \
     go-build-static.sh -gcflags=-trimpath=${GOPATH}/src -o bin/metrics-server ./cmd/metrics-server
 RUN go-assert-static.sh bin/*
-RUN go-assert-boring.sh bin/*
+RUN if [ "${ARCH}" != "s390x" ]; then \
+       go-assert-boring.sh bin/*; \
+    fi
 RUN install -s bin/* /usr/local/bin
 RUN metrics-server --help
 
 FROM ubi
+RUN microdnf update -y && \
+    rm -rf /var/cache/yum
 COPY --from=builder /usr/local/bin/metrics-server /
 ENTRYPOINT ["/metrics-server"]

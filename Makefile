@@ -10,9 +10,9 @@ ORG ?= rancher
 # but still refers internally to github.com/kubernetes-incubator/metrics-server packages
 PKG ?= sigs.k8s.io/metrics-server
 SRC ?= github.com/kubernetes-sigs/metrics-server
-TAG ?= v0.5.0$(BUILD_META)
-UBI_IMAGE ?= centos:7
-GOLANG_VERSION ?= v1.16.7b7-multiarch
+TAG ?= v0.5.2$(BUILD_META)
+UBI_IMAGE ?= registry.access.redhat.com/ubi8/ubi-minimal:latest
+GOLANG_VERSION ?= v1.16.10b7-multiarch
 
 ifneq ($(DRONE_TAG),)
 TAG := $(DRONE_TAG)
@@ -27,6 +27,7 @@ image-build:
 	docker build \
 		--build-arg PKG=$(PKG) \
 		--build-arg SRC=$(SRC) \
+		--build-arg ARCH=$(ARCH) \
 		--build-arg TAG=$(TAG:$(BUILD_META)=) \
                 --build-arg GO_IMAGE=$(ORG)/hardened-build-base:$(GOLANG_VERSION) \
                 --build-arg UBI_IMAGE=$(UBI_IMAGE) \
