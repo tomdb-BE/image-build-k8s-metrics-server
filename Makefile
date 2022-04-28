@@ -10,9 +10,9 @@ ORG ?= rancher
 # but still refers internally to github.com/kubernetes-incubator/metrics-server packages
 PKG ?= sigs.k8s.io/metrics-server
 SRC ?= github.com/kubernetes-sigs/metrics-server
-TAG ?= v0.5.2$(BUILD_META)
+TAG ?= v0.6.1$(BUILD_META)
 UBI_IMAGE ?= registry.access.redhat.com/ubi8/ubi-minimal:latest
-GOLANG_VERSION ?= v1.17.6b7-multiarch
+GOLANG_VERSION ?= v1.18.1b7-multiarch
 
 ifneq ($(DRONE_TAG),)
 TAG := $(DRONE_TAG)
